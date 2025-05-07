@@ -14,5 +14,5 @@ meses = {
 }
 fecha_iso = input("introducir la fecha en formato Iso AAAAMMDD")
 mes = fecha_iso[4:6]
-nombre_mes = meses.get(mes, "Mes no valido")
+nombre_mes = meses.get(mes, "Mes no valido, reescribalo nuevamente por favor")
 print("El mes es: ", nombre_mes)
