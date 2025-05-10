@@ -1,2 +1,2 @@
-# PROBANDO COSAS QUE SE ME OCURRAN
-# EN PYTHON
+from chet import crack
+crack()
