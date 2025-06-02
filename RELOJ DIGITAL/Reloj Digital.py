@@ -4,6 +4,7 @@ import calendar
 from datetime import datetime
 import platform 
 from zoneinfo import ZoneInfo
+from temporizador import Temporizador
 # Solo importar winsound si estamos en Windows
 if platform.system() == "Windows":
     import winsound
@@ -77,7 +78,7 @@ etiqueta_hora.pack(pady=5)
 # Etiqueta fecha
 etiqueta_fecha = tk.Label(ventana, font=('Calibri', 23),fg='red')
 etiqueta_fecha.pack()
-# Botón para cambiar formato de hora
+#Temporizador
 boton_formato = tk.Button(ventana, text="Cambiar formato", command=cambiar_formato, font=('Arial', 12), bg='black', fg='red')
 boton_formato.pack(pady=10)
 actualizar_reloj()
