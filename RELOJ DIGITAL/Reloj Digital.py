@@ -1,8 +1,8 @@
 import tkinter as tk 
-import time 
 from temporizador import CuentaAtras
 from datetime import datetime 
 import platform  
+import calendar
 # Solo importar winsound si estamos en Windows
 if platform.system() == "Windows":
     import winsound
@@ -57,20 +57,23 @@ def cambiar_formato():
 # Crear ventana principal
 ventana = tk.Tk()
 ventana.title("Reloj Digital Personalizado")
-ventana.geometry("400x250")
+ventana.geometry("400x300")
 ventana.resizable(False, False)
 
 # Etiqueta hora
-etiqueta_hora = tk.Label(ventana, font=('Arial', 50, 'bold'), fg='red')
+etiqueta_hora = tk.Label(ventana, font=('Ds-Digital', 50, 'bold'), fg='red')
 etiqueta_hora.pack(pady=5)
 # Etiqueta fecha
-etiqueta_fecha = tk.Label(ventana, font=('Calibri', 23),fg='red')
+etiqueta_fecha = tk.Label(ventana, font=('Calibri', 18),fg='red')
 etiqueta_fecha.pack()
 #Temporizador
 boton_temporizador = tk.Button(ventana, text="Temporizador", command=CuentaAtras, font=('Arial', 12), bg='black', fg='red')
 boton_temporizador.pack(pady=10)
 #cambiar formato reloj
 boton_formato = tk.Button(ventana, text="Cambiar formato", command=cambiar_formato, font=('Arial', 12), bg='black', fg='red')
+boton_formato.pack(pady=10)
+#boton calendario
+boton_formato =tk.Button(ventana, text="calendario", command=mostrar_calendario, font=("Arial", 12), bg="black", fg="red")
 boton_formato.pack(pady=10)
 actualizar_reloj()
 # Ejecutar la app
