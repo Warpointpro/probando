@@ -1,59 +1,95 @@
 import tkinter as tk
-class Temporizador:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Temporizador")
-        self.tiempo = 0
-        self.running = False
 
-        self.label = tk.Label(master, text="00:00", font=("Arial", 48))
-        self.label.pack(pady=20)
+class CuentaAtras(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self.controlesTiempo = tk.Frame(self)
+        self.controlesTiempo.pack(side=tk.TOP)
+        
+        # Etiqueta de "Horas" y spinbox en rojo
+        self.labelHora = tk.Label(self.controlesTiempo, text="Horas", width=10, fg="black")
+        self.labelHora.pack(side=tk.LEFT)
+        self.cajaHora = tk.Spinbox(self.controlesTiempo, from_=0, to=23, fg="black")
+        self.cajaHora.pack(side=tk.LEFT)
+        
+        # Etiqueta de "Minutos" y spinbox en rojo
+        self.labelMinuto = tk.Label(self.controlesTiempo, text="Minutos", width=10, fg="black")
+        self.labelMinuto.pack(side=tk.LEFT)
+        self.cajaMinuto = tk.Spinbox(self.controlesTiempo, from_=0, to=59, fg="black")
+        self.cajaMinuto.pack(side=tk.LEFT)
+        
+        # Etiqueta de "Segundos" y spinbox en rojo
+        self.labelSegundo = tk.Label(self.controlesTiempo, text="Segundos", width=10, fg="black")
+        self.labelSegundo.pack(side=tk.LEFT)
+        self.cajaSegundo = tk.Spinbox(self.controlesTiempo, from_=0, to=59, fg="black")
+        self.cajaSegundo.pack(side=tk.LEFT)
+        
+        self.frCuenta = tk.Frame(self)
+        self.frCuenta.pack(side=tk.BOTTOM)
+        # Aquí se muestra la cuenta regresiva; añadimos fg="red"
+        self.etiquetaCuenta = tk.Label(self, text="00:00:00", font=('Courier New', 100, 'bold'), bg="#0D0E0D", fg="red")
+        self.etiquetaCuenta.pack()
+        
+        self.restante = 0
+        self.botones = tk.Frame(self)
+        self.botones.pack(side=tk.BOTTOM)
+        self.btnIniciar = tk.Button(self.botones, text="Iniciar", command=self.iniciar)
+        self.btnIniciar.pack(side=tk.LEFT)
+        self.btnDetener = tk.Button(self.botones, text="Detener", command=self.detener, state=tk.DISABLED)
+        self.btnDetener.pack(side=tk.LEFT)
 
-        self.entry = tk.Entry(master, width=5, font=("Arial", 24), justify='center')
-        self.entry.pack()
-        self.entry.insert(0, "60")  # segundos por defecto
+    def aHoras(self, segundos):
+        segundos = segundos % (24 * 3600)
+        horas = segundos // 3600
+        segundos %= 3600
+        minutos = segundos // 60
+        segundos %= 60
+        return "%02d:%02d:%02d" % (horas, minutos, segundos)
 
-        self.start_btn = tk.Button(master, text="Iniciar", command=self.iniciar)
-        self.start_btn.pack(side=tk.LEFT, padx=10, pady=10)
+    def aSegundos(self, hora):
+        h, m, s = hora.split(':')
+        return int(h) * 3600 + int(m) * 60 + int(s)
 
-        self.stop_btn = tk.Button(master, text="Detener", command=self.detener)
-        self.stop_btn.pack(side=tk.LEFT, padx=10, pady=10)
+    def cuenta(self, restante = None):
+        if restante is not None:
+            self.restante = restante
 
-        self.reset_btn = tk.Button(master, text="Reiniciar", command=self.reiniciar)
-        self.reset_btn.pack(side=tk.LEFT, padx=10, pady=10)
-
-    def actualizar_tiempo(self):
-        if self.running and self.tiempo > 0:
-            mins, secs = divmod(self.tiempo, 60)
-            self.label.config(text=f"{mins:02d}:{secs:02d}")
-            self.tiempo -= 1
-            self.master.after(1000, self.actualizar_tiempo)
-        elif self.tiempo == 0:
-            self.label.config(text="00:00")
-            self.running = False
+        if self.restante <= 0:
+            mensajeFinal = "00:00:00"
+            self.etiquetaCuenta.configure(text=mensajeFinal)
+            self.escribirAarchivo(mensajeFinal)
+            self.btnIniciar["state"] = tk.NORMAL
+            self.btnDetener["state"] = tk.DISABLED
+            self.sonidoFinal()
+        else:
+            horaActual = self.aHoras(self.restante)
+            self.etiquetaCuenta.configure(text=horaActual)
+            self.escribirAarchivo(horaActual)
+            self.restante = self.restante - 1
+            self.after(1000, self.cuenta)
 
     def iniciar(self):
-        if not self.running:
-            try:
-                self.tiempo = int(self.entry.get())
-            except ValueError:
-                self.tiempo = 60
-            self.running = True
-            self.actualizar_tiempo()
+        total = self.aSegundos("{0}:{1}:{2}".format(self.cajaHora.get(), self.cajaMinuto.get(), self.cajaSegundo.get()))
+        if total > 0:
+            self.cuenta(total)
+            self.btnIniciar["state"] = tk.DISABLED
+            self.btnDetener["state"] = tk.NORMAL
+            self.sonidoTicTac()
 
     def detener(self):
-        self.running = False
+        self.restante = 0
 
-    def reiniciar(self):
-        self.running = False
-        try:
-            self.tiempo = int(self.entry.get())
-        except ValueError:
-            self.tiempo = 60
-        mins, secs = divmod(self.tiempo, 60)
-        self.label.config(text=f"{mins:02d}:{secs:02d}")
+    def escribirAarchivo(self, texto):
+        archivo = open("cuenta.txt","w", encoding="utf-8")
+        archivo.write(texto)
+        archivo.close()
+
+    def sonidoFinal(self):
+        pass
+
+    def sonidoTicTac(self):
+        pass
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = Temporizador(root)
-    root.mainloop()
+    app = CuentaAtras()
+    app.mainloop()

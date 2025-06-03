@@ -1,10 +1,8 @@
-import tkinter as tk
-import time
-import calendar
-from datetime import datetime
-import platform 
-from zoneinfo import ZoneInfo
-from temporizador import Temporizador
+import tkinter as tk 
+import time 
+from temporizador import CuentaAtras
+from datetime import datetime 
+import platform  
 # Solo importar winsound si estamos en Windows
 if platform.system() == "Windows":
     import winsound
@@ -30,20 +28,11 @@ def actualizar_reloj():
     # Actualizar etiquetas
     etiqueta_hora.config(text=hora_str)
     etiqueta_fecha.config(text=fecha_str)
-
-    # Cambiar fondo según la hora del día
-    hora_actual = ahora.hour
-    if 6 <= hora_actual < 12:
-        color_fondo = "#000000"  # Mañana
-    elif 12 <= hora_actual < 18:
-        color_fondo = "#000000"  # Tarde
-    else:
-        color_fondo = "#000000"  # Noche
-
-    ventana.configure(bg=color_fondo)
-    etiqueta_hora.configure(bg=color_fondo)
-    etiqueta_fecha.configure(bg=color_fondo)
-    boton_formato.configure(bg=color_fondo)
+    # Color del fondo
+    ventana.configure(bg="black")
+    etiqueta_hora.configure(bg="black")
+    etiqueta_fecha.configure(bg="black")
+    boton_formato.configure(bg="black")
 
     # Reproducir sonido exactamente al comenzar una nueva hora
     if ahora.minute == 0 and ahora.second == 0:
@@ -74,11 +63,13 @@ ventana.resizable(False, False)
 # Etiqueta hora
 etiqueta_hora = tk.Label(ventana, font=('Arial', 50, 'bold'), fg='red')
 etiqueta_hora.pack(pady=5)
-
 # Etiqueta fecha
 etiqueta_fecha = tk.Label(ventana, font=('Calibri', 23),fg='red')
 etiqueta_fecha.pack()
 #Temporizador
+boton_temporizador = tk.Button(ventana, text="Temporizador", command=CuentaAtras, font=('Arial', 12), bg='black', fg='red')
+boton_temporizador.pack(pady=10)
+#cambiar formato reloj
 boton_formato = tk.Button(ventana, text="Cambiar formato", command=cambiar_formato, font=('Arial', 12), bg='black', fg='red')
 boton_formato.pack(pady=10)
 actualizar_reloj()
