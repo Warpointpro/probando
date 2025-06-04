@@ -31,12 +31,16 @@ class CuentaAtras(tk.Tk):
         self.etiquetaCuenta.pack()
         
         self.restante = 0
+        if hasattr(self, 'after_id'):
+            self.after_cancel(self.after_id)
         self.botones = tk.Frame(self)
         self.botones.pack(side=tk.BOTTOM)
         self.btnIniciar = tk.Button(self.botones, text="Iniciar", command=self.iniciar)
         self.btnIniciar.pack(side=tk.LEFT)
         self.btnDetener = tk.Button(self.botones, text="Detener", command=self.detener, state=tk.DISABLED)
         self.btnDetener.pack(side=tk.LEFT)
+        self.btnIniciar["state"] = tk.NORMAL
+        self.btnDetener["state"] = tk.DISABLED
 
     def aHoras(self, segundos):
         segundos = segundos % (24 * 3600)
@@ -66,7 +70,7 @@ class CuentaAtras(tk.Tk):
             self.etiquetaCuenta.configure(text=horaActual)
             self.escribirAarchivo(horaActual)
             self.restante = self.restante - 1
-            self.after(1000, self.cuenta)
+            self.after_id = self.after(1000, self.cuenta)
 
     def iniciar(self):
         total = self.aSegundos("{0}:{1}:{2}".format(self.cajaHora.get(), self.cajaMinuto.get(), self.cajaSegundo.get()))
