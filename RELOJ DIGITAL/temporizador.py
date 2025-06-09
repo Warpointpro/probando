@@ -7,27 +7,27 @@ class CuentaAtras(tk.Tk):
         self.controlesTiempo.pack(side=tk.TOP)
         
         # Etiqueta de "Horas" y spinbox en rojo
-        self.labelHora = tk.Label(self.controlesTiempo, text="Horas", width=10, fg="black")
+        self.labelHora = tk.Label(self.controlesTiempo, text="Horas", width=8, fg="black")
         self.labelHora.pack(side=tk.LEFT)
-        self.cajaHora = tk.Spinbox(self.controlesTiempo, from_=0, to=23, fg="black")
+        self.cajaHora = tk.Spinbox(self.controlesTiempo, from_=0, to=5, fg="black")
         self.cajaHora.pack(side=tk.LEFT)
         
         # Etiqueta de "Minutos" y spinbox en rojo
-        self.labelMinuto = tk.Label(self.controlesTiempo, text="Minutos", width=10, fg="black")
+        self.labelMinuto = tk.Label(self.controlesTiempo, text="Minutos", width=8, fg="black")
         self.labelMinuto.pack(side=tk.LEFT)
-        self.cajaMinuto = tk.Spinbox(self.controlesTiempo, from_=0, to=59, fg="black")
+        self.cajaMinuto = tk.Spinbox(self.controlesTiempo, from_=0, to=40, fg="black")
         self.cajaMinuto.pack(side=tk.LEFT)
         
         # Etiqueta de "Segundos" y spinbox en rojo
-        self.labelSegundo = tk.Label(self.controlesTiempo, text="Segundos", width=10, fg="black")
+        self.labelSegundo = tk.Label(self.controlesTiempo, text="Segundos", width=8, fg="black")
         self.labelSegundo.pack(side=tk.LEFT)
-        self.cajaSegundo = tk.Spinbox(self.controlesTiempo, from_=0, to=59, fg="black")
+        self.cajaSegundo = tk.Spinbox(self.controlesTiempo, from_=0, to=50, fg="black")
         self.cajaSegundo.pack(side=tk.LEFT)
         
         self.frCuenta = tk.Frame(self)
         self.frCuenta.pack(side=tk.BOTTOM)
         # Aquí se muestra la cuenta regresiva; añadimos fg="red"
-        self.etiquetaCuenta = tk.Label(self, text="00:00:00", font=('Courier New', 100, 'bold'), bg="#0D0E0D", fg="red")
+        self.etiquetaCuenta = tk.Label(self, text="00:00:00", font=('Courier New', 70, 'bold'), bg="#0D0E0D", fg="red")
         self.etiquetaCuenta.pack()
         
         self.restante = 0
