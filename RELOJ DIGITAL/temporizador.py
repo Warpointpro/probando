@@ -27,7 +27,7 @@ class CuentaAtras(tk.Tk):
         self.frCuenta = tk.Frame(self)
         self.frCuenta.pack(side=tk.BOTTOM)
         # Aquí se muestra la cuenta regresiva; añadimos fg="red"
-        self.etiquetaCuenta = tk.Label(self, text="00:00:00", font=('Courier New', 70, 'bold'), bg="#0D0E0D", fg="red")
+        self.etiquetaCuenta = tk.Label(self, text="00:00:00", font=('Courier New', 70, 'bold'), bg="black", fg="red")
         self.etiquetaCuenta.pack()
         
         self.restante = 0
