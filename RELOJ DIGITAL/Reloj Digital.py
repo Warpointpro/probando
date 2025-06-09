@@ -1,7 +1,7 @@
 import tkinter as tk 
 from temporizador import CuentaAtras
 from datetime import datetime 
-import platform  
+import platform
 import calendar
 # Solo importar winsound si estamos en Windows
 if platform.system() == "Windows":
