@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 # Create your views here.
-def index(request): 
-    return HttpResponse("Hola mundo desde blog")
+def home(request):
+    return render(request, 'blog/lista_posts.html')

@@ -1,0 +1,39 @@
+<!-- DJ/pagina/blog/templates/blog/lista_posts.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Blog Mas Pedorro que veras</title>
+    <style>
+        nav {
+            background: #222;
+            padding: 15px;
+        }
+        nav a {
+            color: #fff;
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">INICIO</a>
+        <a href="/admin/">ADMIN</a>
+        <!-- Puedes agregar más enlaces aquí -->
+    </nav>
+    <h1>Lista de Posts</h1>
+    {% for post in posts %}
+        <h2>{{ post.titulo }}</h2>
+        <p>{{ post.contenido }}</p>
+        <small>{{ post.fecha }}</small>
+        <hr>
+    {% empty %}
+        <p>No hay posts aún.</p>
+    {% endfor %}
+</body>
+</html>
